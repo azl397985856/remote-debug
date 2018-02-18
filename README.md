@@ -22,7 +22,7 @@
 ## 常见的远程调试框架对比
 如下是我对比较常见的远程调试框架的简单对比。
 
-[remote-debug](https://github.com/azl397985856/remote-debug/blob/master/illustrations/remote-debug.png)
+![remote-debug](https://github.com/azl397985856/remote-debug/blob/master/illustrations/remote-debug.png)
 
 ## 调试的辅助手段
 1. locus
