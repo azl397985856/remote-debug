@@ -20,13 +20,16 @@
 3. 调试ios webview（可以使用iOS WebKit Debug Proxy代理，然后问题便退化成上述两种场景）
 
 ## 常见的远程调试框架对比
+如下是我对比较常见的远程调试框架的简单对比。
 
+[remote-debug](https://github.com/azl397985856/remote-debug/blob/master/illustrations/remote-debug.png)
 
 ## 调试的辅助手段
 1. locus
 2. data
 3. 其他调试信息
 
-参考：
+## 参考
 https://www.jianshu.com/p/19c18c924f91
+
 https://aotu.io/notes/2017/02/24/Mobile-debug/index.html
