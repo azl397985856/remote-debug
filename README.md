@@ -40,12 +40,15 @@ webSocketDebuggerUrl是调试页面需要用到的WebSocket连接的地址。
 远程调试大概有三种类型：
 
 1. 调试远程PC（本质上是一个debug server 和 一个debug target，其实下面两种也是这种模型，ios中间会多一个协议转化而已）
+
 这种类型下的debug target就是pc, debug server 也是pc。
 
 2. 调试android webview（很多方式，但安卓4.4以后本质都是Chrome DevTools Protocol的扩展）
+
 这种类型下的debug target就是android webview，debug server 是pc。
 
 3. 调试ios webview（可以使用iOS WebKit Debug Proxy代理，然后问题便退化成上述两种场景）
+
 这种类型下的debug target就是ios webview， debug server 是pc。
 
 ## 常见的远程调试框架对比
@@ -79,9 +82,11 @@ iOS设置代理步骤：设置 - 无线局域网 - 选中网络 - HTTP代理手�
 其他信息来辅助。下面来讲解一些调试的辅助手段。
 
 1. locus
+
 有时候我们需要知道用户的浏览轨迹，从而方便定位问题。
 浏览轨迹的粒度可以自己决定，可以是组件级，也可以是页面级。
 2. data
+
 获取足够的信息对于调试是非常重要的。尤其是数据驱动（data driven）的应用，
 知道了数据，基本上就可以还原现场，定位问题。
 
@@ -90,6 +95,7 @@ iOS设置代理步骤：设置 - 无线局域网 - 选中网络 - HTTP代理手�
 如果使用其他的状态管理框架或者自制的状态管理，也可以采取类似的方式。
 
 3. 其他调试信息
+
 比如用户的id，客户端数据，登陆的session信息等等对于调试有所帮助的，都可以将其收集起来。
 
 ## 参考
