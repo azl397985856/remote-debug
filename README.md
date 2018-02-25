@@ -74,6 +74,8 @@ webSocketDebuggerUrl是调试页面需要用到的WebSocket连接的地址。
 const ws = new WebSocket('ws://127.0.0.1:9222/devtools/page/fefa.....-ffa')
 ws.send('{"id": 1, "method": "Network.clearBrowserCache", "params": {}}')
 ```
+
+还有很多类似的api，因此就可以构造复杂的[扩展](https://developer.chrome.com/extensions/samples)
 ## 常见的远程调试框架对比
 明白了远程调试的类型，那么对于不同的类型应该采取什么样的手段是我们最为关心的问题。
 在回答这个问题之前，我们先来看下市面上的远程调试框架，他们做了什么事情，解决了什么问题。
