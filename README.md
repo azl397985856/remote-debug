@@ -52,10 +52,28 @@ http://127.0.0.1:9222/json 可以查看特定的远程调试目标信息，类�
 ]
 ```
 
-其中id是一个唯一的标示，[chrome dev protocol](https://chromedevtools.github.io/devtools-protocol/)基本都依赖这个id，比如关闭
+其中id是一个唯一的标示，[chrome dev protocol](https://chromedevtools.github.io/devtools-protocol/)基本都依赖这个id。
+
+比如关闭一个页面：
+
+```json
+http://localhost:9222/json/close/477810FF-323E-44C5-997C-89B7FAC7B158
+```
+
+再比如激活一个页面：
+
+```json
+http://localhost:9222/json/activate/477810FF-323E-44C5-997C-89B7FAC7B158
+```
 具体可以查看官方信息。
+
 webSocketDebuggerUrl是调试页面需要用到的WebSocket连接的地址。
 
+比如我需要清空浏览器缓存，就用websocket连接到该页面之后调用send方法
+```js
+const ws = new WebSocket('ws://127.0.0.1:9222/devtools/page/fefa.....-ffa')
+ws.send('{"id": 1, "method": "Network.clearBrowserCache", "params": {}}')
+```
 ## 常见的远程调试框架对比
 明白了远程调试的类型，那么对于不同的类型应该采取什么样的手段是我们最为关心的问题。
 在回答这个问题之前，我们先来看下市面上的远程调试框架，他们做了什么事情，解决了什么问题。
