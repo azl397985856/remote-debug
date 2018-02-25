@@ -11,6 +11,24 @@
 那么远程调试就是调试运行在远程的APP。比如手机上访问google，我需要在PC上调试手机上运行的google APP。
 这个就叫做远程调试。
 
+远程调试大概有三种类型：
+
+1. 调试远程PC（本质上是一个debug server 和 一个debug target，其实下面两种也是这种模型，ios中间会多一个协议转化而已）
+
+这种类型下的debug target就是pc, debug server 也是pc。
+
+2. 调试android webview（很多方式，但安卓4.4以后本质都是Chrome DevTools Protocol的扩展）
+
+这种类型下的debug target就是android webview，debug server 是pc。
+
+3. 调试ios webview（可以使用iOS WebKit Debug Proxy代理，然后问题便退化成上述两种场景）
+
+这种类型下的debug target就是ios webview， debug server 是pc。
+
+### chrome远程调试
+提到chrome的远程调试，就不得不提[chrome remote debug protocol](https://developer.chrome.com/devtools/docs/debugger-protocol)。
+它采用websocket来与页面建立通信通道，由发送给页面的command和data组成。chrome的开发者工具是这个协议主要的使用者，第三方开发者也可以调用这个协议来与页面交互调试。简而言之，有了它我们就可以和chrome中的页面进行双向通信。
+
 chrome 启动的时候，默认是关闭了调试端口的，如果要对一个chrome PC 浏览器进行调试，那么启动的时候，可以通过传递参数来开启 Chrome 的调试开关：
 
 ```
@@ -19,7 +37,7 @@ sudo /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-deb
 
 这个时候就可以通过http://127.0.0.1:9222 查看所有远程调试目标
 
-http://127.0.0.1:9222/json 可以查看特定的远程调试目标信息。
+http://127.0.0.1:9222/json 可以查看特定的远程调试目标信息，类型为json数组。
 ```json
 [
   {
@@ -34,22 +52,9 @@ http://127.0.0.1:9222/json 可以查看特定的远程调试目标信息。
 ]
 ```
 
-其中id是一个唯一的标示，[chrome dev protocol](https://chromedevtools.github.io/devtools-protocol/)基本都依赖这个id，具体可以查看官方信息。
+其中id是一个唯一的标示，[chrome dev protocol](https://chromedevtools.github.io/devtools-protocol/)基本都依赖这个id，比如关闭
+具体可以查看官方信息。
 webSocketDebuggerUrl是调试页面需要用到的WebSocket连接的地址。
-
-远程调试大概有三种类型：
-
-1. 调试远程PC（本质上是一个debug server 和 一个debug target，其实下面两种也是这种模型，ios中间会多一个协议转化而已）
-
-这种类型下的debug target就是pc, debug server 也是pc。
-
-2. 调试android webview（很多方式，但安卓4.4以后本质都是Chrome DevTools Protocol的扩展）
-
-这种类型下的debug target就是android webview，debug server 是pc。
-
-3. 调试ios webview（可以使用iOS WebKit Debug Proxy代理，然后问题便退化成上述两种场景）
-
-这种类型下的debug target就是ios webview， debug server 是pc。
 
 ## 常见的远程调试框架对比
 明白了远程调试的类型，那么对于不同的类型应该采取什么样的手段是我们最为关心的问题。
