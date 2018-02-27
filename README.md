@@ -1,6 +1,6 @@
 # remote-debug
 调试是开发过程很重要的过程，而随着移动端的普及，移动开发也越来越多，并且由于移动端的诸多限制，使得调试相对PC复杂很多。因此远程调试就显得非常重要了。
-近几年，浏览器厂商也纷纷推出自己的远程调试工具，比如Opera Mobile 可以借助其推出的跨设备跨平台桌面开发者工具Opera Dragonfly 实现远程调试，iOS Safari 可以开启Web检查器在 Mac OS X系统中实现远程调试。Android 4+已上系统的 Chrome for Android可以 配合 ADB（Android Debug Bridge）实现桌面远程调试，桌面版Chrome 32+已经支持免安装ADB即可实现远程调试移动设备页面/WebView 。国内的UC浏览器开发者版也推出了自己的远程调试工具RemoteInspector。除了浏览器厂商之外，也涌现出许多第三方开发的远程调试工具，诸如支持全平台调试的Weinre。
+近几年，浏览器厂商也纷纷推出自己的远程调试工具，比如Opera Mobile 推出的Opera Dragonfly，iOS Safari 可以开启Web检查器在 Mac OS X系统中实现远程调试。Android 4.0+系统的 Chrome for Android可以配合 ADB（Android Debug Bridge）实现桌面远程调试，桌面版Chrome 32+已经支持免安装ADB即可实现远程调试移动设备页面/WebView 。国内的UC浏览器开发者版也推出了自己的远程调试工具RemoteInspector。除了浏览器厂商之外，也涌现出许多第三方开发的远程调试工具，诸如支持全平台调试的Weinre等。
 
 本文主要介绍远程调试是什么，基本原理是什么，有哪些情况，以及如何根据不同的情况选择恰当优雅的调试方式。
 
@@ -16,16 +16,13 @@
 
 远程调试大概有三种类型：
 
-1. 调试远程PC（本质上是一个debug server 和 一个debug target，其实下面两种也是这种模型，ios中间会多一个协议转化而已）
-
+* 调试远程PC（本质上是一个debug server 和 一个debug target，其实下面两种也是这种模型，ios中间会多一个协议转化而已）
 这种类型下的debug target就是pc, debug server 也是pc。
 
-2. 调试android webview（很多方式，但安卓4.4以后本质都是Chrome DevTools Protocol的扩展）
-
+* 调试android webpage/webview（很多方式，但安卓4.4以后本质都是Chrome DevTools Protocol的扩展）
 这种类型下的debug target就是android webview，debug server 是pc。
 
-3. 调试ios webview（可以使用iOS WebKit Debug Proxy代理，然后问题便退化成上述两种场景）
-
+* 调试ios webpag/webview（可以使用iOS WebKit Debug Proxy代理，然后问题便退化成上述两种场景）
 这种类型下的debug target就是ios webview， debug server 是pc。
 
 ### chrome远程调试
@@ -85,7 +82,7 @@ ws.send('{"id": 1, "method": "Network.clearBrowserCache", "params": {}}')
 
 如下是我对比较常见的远程调试框架的简单对比。
 
-![remote-debug](https://github.com/azl397985856/remote-debug/blob/master/illustrations/remote-debug.png)
+![remote-debug](https://user-gold-cdn.xitu.io/2018/2/25/161cab2a2b8cc4cf?w=878&h=569&f=png&s=93455)
 
 后面虚线里面的是除了抓包功能之外调试框架，可以看出灰色部分是他们不支持的。
 这时候就需要专门的抓包工具来代替。通常来说专门的抓包工具功能包括但不限于请求拦截和修改，https支持，重放和构造请求，(web)socket。
@@ -110,11 +107,11 @@ iOS设置代理步骤：设置 - 无线局域网 - 选中网络 - HTTP代理手�
 通过上面的方式我们已经建立了调试的准备环境。但是真正调试应用，发现问题，解决问题。还需要
 其他信息来辅助。下面来讲解一些调试的辅助手段。
 
-1. locus
+### 用户轨迹
 
 有时候我们需要知道用户的浏览轨迹，从而方便定位问题。
 浏览轨迹的粒度可以自己决定，可以是组件级，也可以是页面级。
-2. data
+### 应用数据
 
 获取足够的信息对于调试是非常重要的。尤其是数据驱动（data driven）的应用，
 知道了数据，基本上就可以还原现场，定位问题。
@@ -126,7 +123,7 @@ iOS设置代理步骤：设置 - 无线局域网 - 选中网络 - HTTP代理手�
 然而我们也可以使用现成的工具，比如使用react-dev-tools调试react应用。
 比如使用redux-dev-tools调试使用redux的应用等等。
 
-3. 其他调试信息
+### 其他调试信息
 
 比如用户的id，客户端数据，登陆的session信息等等对于调试有所帮助的，都可以将其收集起来。
 
