@@ -115,6 +115,56 @@ iOS设置代理步骤：设置 - 无线局域网 - 选中网络 - HTTP代理手�
 
 理想的状况是，手机仅仅需要配置一次（安装证书，设置代理等），以后调试的时候就可以直接查看该手机的请求以及控制台，元素等等，并且直接指定映射到任何电脑
 进行pc端调试。不同开发者之间可以方便的共享配置（比如有一个集团或公司的共有配置）。
+
+拿搭建一个whistle的服务为例。
+ 
+ 
+### 下载项目并启动:
+
+ ```
+npm install whistle -g --registry=https://registry.npm.taobao.org
+ ```
+ 
+ ```
+ w2 start
+ ```
+ 
+### 设置代理：
+ 
+ 比如设置手机的代理为x.x.x.x:8899
+ 
+ 
+ > x.x.x.x 为部署服务的ip地址，8899为默认端口，若修改了，则对应修改为修改后的端口号
+ 
+### dashboard
+ 
+ 访问http://x.x.x.x:8899/,会看到如下的页面：
+ 
+ ![whistle dashboard](http://yun.duiba.com.cn/tuia/test/fXuTX1519699845215.png)
+ 
+ 我们可以在network查看远程的网络请求，可以通过其内置的weinre查看元素，控制台等
+ 
+ 可以看到我们配置了三套配置，分别为默认配置，项目一和项目二。
+ 
+ 简单介绍下配置做了什么。
+ 
+ 前两个就是简单地将请求映射到本地。
+ 
+ 第三条配置会拦截www.duiba.com.cn 的请求，并在html中注入一端weinre脚本。拦截成功就可以通过访问http://x.x.x.x:8899/weinre/client/#sword 访问对应的开发者工具进行调试。
+ ![weinre-client](http://yun.duiba.com.cn/tuia/test/r2bh21519700224081.png)
+ 
+ 其他功能：
+ 
+Network：主要用来查看请求信息，构造请求，页面 console 打印的日志及抛出的js错误等
+
+Rules：配置操作规则
+
+Plugins：安装的插件信息，及启用或禁用插件
+
+Weinre：设置的weinre列表
+
+HTTPS：设置是否拦截HTTPS请求，及下载whistle根证书
+
 ## 调试的辅助手段
 通过上面的方式我们已经建立了调试的准备环境。但是真正调试应用，发现问题，解决问题。还需要
 其他信息来辅助。下面来讲解一些调试的辅助手段。
